@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Api\LoanController;
+
 
 // =====================
 // REGISTER
@@ -138,36 +140,13 @@ Route::post('/reset-password', function (Request $request) {
 });
 
 
-
-// use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Route;
-// use App\Models\User;
-// use Illuminate\Support\Facades\Hash;
-
-// Route::post('/register', function (Request $request) {
-
-//     $validated = validator($request->all(), [
-//         'first_name' => 'required|string|max:255',
-//         'last_name' => 'required|string|max:255',
-//         'email' => 'required|email|unique:users,email',
-//         'password' => 'required|string|confirmed|min:6',
-//         'phone' => 'required|string',
-//         'location' => 'required|string',
-//     ])->validate();
-
-//     $user = User::create([
-//         'name' => $validated['first_name'].' '.$validated['last_name'],
-//         'email' => $validated['email'],
-//         'password' => Hash::make($validated['password']),
-//         'phone' => $validated['phone'],
-//         'location' => $validated['location'],
-//     ]);
-
-//     $token = $user->createToken('auth_token')->plainTextToken;
-
-//     return response()->json([
-//         'message' => 'User registered successfully',
-//         'token' => $token,
-//         'user' => $user,
-//     ], 201);
-// });
+// =====================
+// LOAN API ROUTES
+// =====================
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/loans', [LoanController::class, 'index']);
+    Route::get('/loans/{id}', [LoanController::class, 'show']);
+    Route::post('/loans', [LoanController::class, 'store']);
+    Route::put('/loans/{id}', [LoanController::class, 'update']);
+    Route::delete('/loans/{id}', [LoanController::class, 'destroy']);
+});

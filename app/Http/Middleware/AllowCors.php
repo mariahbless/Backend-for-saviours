@@ -20,7 +20,7 @@ class AllowCors
         }
 
         // Add CORS headers
-        $response->headers->set('Access-Control-Allow-Origin', 'http://localhost:58724'); // Flutter web origin
+        $response->headers->set('Access-Control-Allow-Origin', 'http://localhost:54123'); // Flutter web origin
         $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
         $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
 
