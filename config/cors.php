@@ -18,8 +18,8 @@ return [
     'allowed_methods' => ['*'],
 
    'allowed_origins' => [
-        'http://localhost:54123',
-        'http://localhost:54123/', // Flutter web running on this port
+        'http://localhost:53905',
+        'http://localhost:53905/', // Flutter web running on this port
         'http://127.0.0.1:8000',  // Optional: if you test via Postman or browser
     ],
 
