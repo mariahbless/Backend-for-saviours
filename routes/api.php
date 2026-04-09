@@ -143,6 +143,7 @@ Route::post('/reset-password', function (Request $request) {
 // =====================
 // LOAN API ROUTES
 // =====================
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/loans', [LoanController::class, 'index']);
     Route::get('/loans/{id}', [LoanController::class, 'show']);
@@ -150,3 +151,22 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/loans/{id}', [LoanController::class, 'update']);
     Route::delete('/loans/{id}', [LoanController::class, 'destroy']);
 });
+
+
+Route::middleware('auth:sanctum')->group(function () {
+ 
+    // NEW: Logout
+    Route::post('/logout', [AuthController::class, 'logout']);
+ 
+    // Loan routes
+    Route::get('/loans',          [LoanController::class, 'index']);    // NEW: get user's loans
+    Route::post('/loans',         [LoanController::class, 'store']);    // already exists
+    Route::get('/loans/{id}',     [LoanController::class, 'show']);     // already exists
+    Route::put('/loans/{id}',     [LoanController::class, 'update']);   // already exists (now with pending check)
+    Route::delete('/loans/{id}',  [LoanController::class, 'destroy']); // already exists
+ 
+    // NEW: Repayment routes
+    Route::post('/loans/{id}/repay',       [LoanController::class, 'repay']);
+    Route::get('/loans/{id}/repayments',   [LoanController::class, 'repayments']);
+});
+ 
