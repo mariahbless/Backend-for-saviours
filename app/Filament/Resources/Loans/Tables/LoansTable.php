@@ -11,7 +11,8 @@ class LoansTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->columns([
+            ->defaultSort('created_at', 'desc') 
+               ->columns([
                 TextColumn::make('user.name')
                     ->label('User')
                     ->searchable(),
@@ -23,6 +24,10 @@ class LoansTable
                 TextColumn::make('description')
                     ->label('Loan Type')
                     ->searchable(),
+
+                TextColumn::make('collateral')
+                    ->label('Collateral')
+                     ->searchable(),
 
                 BadgeColumn::make('status')
                     ->colors([

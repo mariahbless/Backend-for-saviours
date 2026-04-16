@@ -31,14 +31,18 @@ class Loan extends Model
         'status',
 
         // ID Upload
-        'id_image',
+        'id_image_front',
+        'id_image_back',
 
         'notes',
     ];
 
-    // Relationship to User
+    protected $casts = [
+        'amount' => 'float',
+        'monthly_income' => 'float',
+    ];
+
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class);
-    }
-}
+    }}
