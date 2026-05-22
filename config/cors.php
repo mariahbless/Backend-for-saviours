@@ -2,25 +2,16 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Cross-Origin Resource Sharing (CORS) Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure your settings for cross-origin resource sharing
-    | or "CORS". This determines what cross-origin operations may execute
-    | in web browsers. You are free to adjust these settings as needed.
-    |
-    */
+   
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
    'allowed_origins' => [
-        'http://localhost:54766',
-        'http://localhost:54766/', // Flutter web running on this port
-        'http://127.0.0.1:54766',  // Optional: if you test via Postman or browser
+        'http://localhost:59913',
+        'http://localhost:59913/', 
+        'http://127.0.0.1:59913',  
     ],
 
     'allowed_origins_patterns' => [],
