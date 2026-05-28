@@ -112,19 +112,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="border-top: 1px solid #F3F4F6;">
-                        <td style="padding: 14px 16px; font-weight: 600; color: #1F2937;">👑 Super Admin</td>
-                        <td style="padding: 14px 16px;">
-                            <span style="background: #FEE2E2; color: #DC2626; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;">Full Access</span>
-                        </td>
-                        <td style="padding: 14px 16px; color: #6B7280;">Can manage everything including settings</td>
-                    </tr>
                     <tr style="border-top: 1px solid #F3F4F6; background: #FAFAFA;">
                         <td style="padding: 14px 16px; font-weight: 600; color: #1F2937;">🛡️ Admin</td>
                         <td style="padding: 14px 16px;">
                             <span style="background: #DBEAFE; color: #2563EB; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;">High Access</span>
                         </td>
-                        <td style="padding: 14px 16px; color: #6B7280;">Can manage loans and users</td>
+                        <td style="padding: 14px 16px; color: #6B7280;">Can manage everything in loans and users</td>
                     </tr>
                     <tr style="border-top: 1px solid #F3F4F6;">
                         <td style="padding: 14px 16px; font-weight: 600; color: #1F2937;">📋 Loan Officer</td>

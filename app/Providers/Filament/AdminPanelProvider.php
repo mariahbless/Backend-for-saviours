@@ -87,7 +87,7 @@ class AdminPanelProvider extends PanelProvider
 
             /* 🖱️ Hover effect */
             .fi-sidebar-item-button:hover {
-                background-color: #bac5e9 !important;
+                background-color: #25f56e !important;
             }
         </style>
     '

@@ -8,11 +8,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
+//use Spatie\LaravelPermission\Traits\HasRoles;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -23,8 +25,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'phone',      // added for API
-        'location',   // added for API
+        'phone',
+        'location',
     ];
 
     /**
@@ -50,10 +52,10 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the user's initials
+     * Get the user's loans
      */
     public function loans()
-{
-    return $this->hasMany(\App\Models\Loan::class);
-}
+    {
+        return $this->hasMany(\App\Models\Loan::class);
+    }
 }

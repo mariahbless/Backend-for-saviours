@@ -4,7 +4,7 @@
     <div style="background: linear-gradient(135deg, #1E40AF, #3B82F6); border-radius: 16px; padding: 28px 32px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;">
         <div>
             <h1 style="font-size: 22px; font-weight: 700; color: white; margin: 0;">
-                Welcome back, {{ auth()->user()->name }} 👋
+                Welcome back, {{ auth()->user()->name }} 
             </h1>
             <p style="font-size: 14px; color: #BFDBFE; margin: 6px 0 0;">
                 Here's what's happening with Saviours today — {{ now()->format('l, F j, Y') }}
