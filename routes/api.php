@@ -170,3 +170,62 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/loans/{id}/repayments',   [LoanController::class, 'repayments']);
 });
  
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/system/deploy', function (Request $request) {
+    if ($request->query('token') !== env('APP_DEPLOY_TOKEN', 'deploy_secret_123')) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    try {
+        $output = "=== Fixing Permissions ===\n";
+        $basePath = base_path();
+        
+        // Fix directory permissions
+        $dirs = ['public', 'storage', 'bootstrap/cache'];
+        foreach ($dirs as $dir) {
+            $path = $basePath . '/' . $dir;
+            if (is_dir($path)) {
+                chmod($path, 0755);
+                $output .= "Fixed: $dir -> 0755\n";
+            }
+        }
+        
+        // Fix storage subdirectories recursively
+        $storageIterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($basePath . '/storage', \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
+        foreach ($storageIterator as $item) {
+            if ($item->isDir()) {
+                chmod($item->getPathname(), 0755);
+            }
+        }
+        $output .= "Fixed: storage/** directories -> 0755\n";
+
+        // Create storage link if it doesn't exist
+        $output .= "\n=== Storage Link ===\n";
+        if (!file_exists(public_path('storage'))) {
+            Artisan::call('storage:link');
+            $output .= Artisan::output();
+        } else {
+            $output .= "Storage link already exists\n";
+        }
+
+        // Run migrations and seeders
+        $output .= "\n=== Running Migrations & Seeders ===\n";
+        Artisan::call('migrate', ['--force' => true, '--seed' => true]);
+        $output .= Artisan::output();
+        
+        // Clear and optimize
+        $output .= "\n=== Optimizing ===\n";
+        Artisan::call('optimize:clear');
+        $output .= Artisan::output();
+        
+        return response("Deployment successful!\n\n" . $output, 200)
+            ->header('Content-Type', 'text/plain');
+    } catch (\Exception $e) {
+        return response("Deployment failed: " . $e->getMessage() . "\n" . $e->getTraceAsString(), 500)
+            ->header('Content-Type', 'text/plain');
+    }
+});

@@ -57,7 +57,24 @@ jobs:
               $zip->extractTo('../');
               $zip->close();
               unlink($zipFile);
-              echo "Extraction successful.\n";
+              
+              // Fix permissions BEFORE Laravel boots
+              $basePath = realpath('../');
+              $dirs = ['public', 'storage', 'bootstrap/cache'];
+              foreach ($dirs as $dir) {
+                  $path = $basePath . '/' . $dir;
+                  if (is_dir($path)) chmod($path, 0755);
+              }
+              
+              $storageIterator = new RecursiveIteratorIterator(
+                  new RecursiveDirectoryIterator($basePath . '/storage', RecursiveDirectoryIterator::SKIP_DOTS),
+                  RecursiveIteratorIterator::SELF_FIRST
+              );
+              foreach ($storageIterator as $item) {
+                  if ($item->isDir()) chmod($item->getPathname(), 0755);
+              }
+              
+              echo "Extraction and permission fix successful.\n";
           } else {
               http_response_code(500);
               die("Extraction failed.");
@@ -85,7 +102,7 @@ jobs:
 
       - name: Run Migrations and Optimize on Live Server
         run: |
-          response=$(curl -s -w "\n%{http_code}" "https://admin.savioursfinance.com/system/deploy?token=${{ secrets.DEPLOY_TOKEN }}")
+          response=$(curl -s -w "\n%{http_code}" "https://admin.savioursfinance.com/api/system/deploy?token=${{ secrets.DEPLOY_TOKEN }}")
           http_code=$(echo "$response" | tail -n1)
           body=$(echo "$response" | sed '$d')
           echo "$body"
