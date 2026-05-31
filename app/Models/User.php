@@ -11,8 +11,16 @@ use Laravel\Sanctum\HasApiTokens;
 //use Spatie\LaravelPermission\Traits\HasRoles;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
+
+class User extends Authenticatable implements FilamentUser
 {
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->hasRole('admin') || $this->hasRole('loan officer') || $this->hasRole('viewer');
+    }
+    
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles;
 
