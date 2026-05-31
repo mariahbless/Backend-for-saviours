@@ -44,14 +44,44 @@ jobs:
             quit;
           "
 
-      - name: Fix public permissions via FTP
+      - name: Create standalone unzip script
+        run: |
+          cat << 'EOF' > unzip.php
+          <?php
+          $zipFile = '../release.zip';
+          if (!file_exists($zipFile)) {
+              die("release.zip not found!");
+          }
+          $zip = new ZipArchive;
+          if ($zip->open($zipFile) === TRUE) {
+              $zip->extractTo('../');
+              $zip->close();
+              unlink($zipFile);
+              echo "Extraction successful.\n";
+          } else {
+              http_response_code(500);
+              die("Extraction failed.");
+          }
+          EOF
+
+      - name: Fix public permissions via FTP and upload unzip.php
         run: |
           sudo apt-get install -y lftp
           lftp -u "${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" -e "
             set ssl:verify-certificate no;
             chmod 755 public || true;
+            put unzip.php -o public/unzip.php;
             quit;
           "
+
+      - name: Run Extraction
+        run: |
+          response=$(curl -s -w "\n%{http_code}" "https://admin.savioursfinance.com/unzip.php")
+          http_code=$(echo "$response" | tail -n1)
+          if [ "$http_code" != "200" ]; then
+            echo "Extraction failed HTTP $http_code"
+            exit 1
+          fi
 
       - name: Run Migrations and Optimize on Live Server
         run: |

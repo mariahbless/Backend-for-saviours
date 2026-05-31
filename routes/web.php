@@ -21,24 +21,8 @@ Route::get('/system/deploy', function (Request $request) {
     }
 
     try {
-        $output = "";
+        $output = "=== Fixing Permissions ===\n";
         $basePath = base_path();
-        $zipFile = $basePath . '/release.zip';
-
-        if (file_exists($zipFile)) {
-            $output .= "=== Extracting release.zip ===\n";
-            $zip = new ZipArchive;
-            if ($zip->open($zipFile) === TRUE) {
-                $zip->extractTo($basePath);
-                $zip->close();
-                unlink($zipFile);
-                $output .= "Successfully extracted and deleted release.zip\n\n";
-            } else {
-                $output .= "Failed to open release.zip\n\n";
-            }
-        }
-
-        $output .= "=== Fixing Permissions ===\n";
         
         // Fix directory permissions
         $dirs = ['public', 'storage', 'bootstrap/cache'];
