@@ -7,31 +7,31 @@ on:
 
 jobs:
   web-deploy:
-    name: 🎉 Deploy
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Get latest code
+      - name: Get latest code
         uses: actions/checkout@v4
       
-      - name: ⚙️ Setup PHP
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
       
-      - name: 📦 Install PHP Dependencies
+      - name: Install PHP Dependencies
         run: composer install --no-dev --optimize-autoloader
 
-      - name: ⚙️ Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: 📦 Install and Build Node Dependencies
+      - name: Install and Build Node Dependencies
         run: |
           npm install
           npm run build
 
-      - name: 📂 Sync files to cPanel
+      - name: Sync files to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -44,5 +44,26 @@ jobs:
             **/tests/**
             .env.example
 
-      - name: 🚀 Run Migrations and Optimize on Live Server
-        run: curl -s -X GET "https://admin.savioursfinance.com/system/deploy?token=${{ secrets.DEPLOY_TOKEN }}"
+      - name: Fix permissions via FTP
+        run: |
+          sudo apt-get install -y lftp
+          lftp -u "${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" -e "
+            chmod 755 public;
+            chmod 755 storage;
+            chmod 755 bootstrap;
+            chmod 755 bootstrap/cache;
+            chmod 644 public/.htaccess;
+            chmod 644 public/index.php;
+            quit;
+          "
+
+      - name: Run Migrations and Optimize on Live Server
+        run: |
+          response=$(curl -s -w "\n%{http_code}" "https://admin.savioursfinance.com/system/deploy?token=${{ secrets.DEPLOY_TOKEN }}")
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | sed '$d')
+          echo "$body"
+          if [ "$http_code" != "200" ]; then
+            echo "Deploy endpoint returned HTTP $http_code"
+            exit 1
+          fi
