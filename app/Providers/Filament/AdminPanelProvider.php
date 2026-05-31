@@ -50,6 +50,19 @@ class AdminPanelProvider extends PanelProvider
                 width: 15rem !important;  /* change width here */
                 object-fit: contain;      /* keeps aspect ratio */
             }
+            .fi-simple-layout {
+                background-image: url("/images/login-bg.png") !important;
+                background-size: cover !important;
+                background-position: center !important;
+                background-attachment: fixed !important;
+            }
+            .fi-simple-main {
+                background-color: rgba(255, 255, 255, 0.95) !important;
+                border-radius: 1rem !important;
+                padding: 2.5rem !important;
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+                backdrop-filter: blur(10px) !important;
+            }
         </style>
     '
 )
