@@ -24,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
+        \Opcodes\LogViewer\Facades\LogViewer::auth(function ($request) {
+            return $request->user() && $request->user()->hasRole('admin');
+        });
     }
 
     /**
