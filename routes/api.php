@@ -222,6 +222,11 @@ Route::get('/system/deploy', function (Request $request) {
         Artisan::call('optimize:clear');
         $output .= Artisan::output();
         
+        if (function_exists('opcache_reset')) {
+            opcache_reset();
+            $output .= "\nOPcache reset successfully.\n";
+        }
+        
         return response("Deployment successful!\n\n" . $output, 200)
             ->header('Content-Type', 'text/plain');
     } catch (\Exception $e) {
