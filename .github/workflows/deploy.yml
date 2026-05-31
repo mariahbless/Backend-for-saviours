@@ -44,6 +44,16 @@ jobs:
             quit;
           "
 
+      - name: Fix public permissions via FTP
+        run: |
+          sudo apt-get install -y lftp
+          lftp -u "${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" -e "
+            set ssl:verify-certificate no;
+            chmod 755 public;
+            chmod 644 public/index.php;
+            quit;
+          "
+
       - name: Run Migrations and Optimize on Live Server
         run: |
           response=$(curl -s -w "\n%{http_code}" "https://admin.savioursfinance.com/system/deploy?token=${{ secrets.DEPLOY_TOKEN }}")
