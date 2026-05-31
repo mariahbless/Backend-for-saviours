@@ -21,7 +21,7 @@ Route::get('/system/deploy', function (Request $request) {
     }
 
     try {
-        Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('migrate', ['--force' => true, '--seed' => true]);
         $output = Artisan::output();
         
         Artisan::call('optimize:clear');
