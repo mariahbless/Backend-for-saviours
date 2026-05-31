@@ -36,38 +36,36 @@ class AdminPanelProvider extends PanelProvider
 
             // Theme Color
             ->colors([
-                'primary' => Color::hex('#1E40AF'),
+                'primary' => Color::Blue,
             ])
+            ->font('Poppins')
             ->darkMode(false)
 
-
             ->renderHook(
-    'panels::head.end',
-    fn () => '
-        <style>
-            .fi-logo img {
-                height: 6rem !important;  /* change height here */
-                width: 15rem !important;  /* change width here */
-                object-fit: contain;      /* keeps aspect ratio */
-            }
-            .fi-simple-layout {
-                background-image: url("/images/login-bg.png") !important;
-                background-size: cover !important;
-                background-position: center !important;
-                background-attachment: fixed !important;
-            }
-            .fi-simple-main {
-                background-color: rgba(255, 255, 255, 0.95) !important;
-                border-radius: 1rem !important;
-                padding: 2.5rem !important;
-                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
-                backdrop-filter: blur(10px) !important;
-            }
-        </style>
-    '
-)
-
-
+                'panels::head.end',
+                fn () => '
+                    <style>
+                        .fi-logo img {
+                            height: 6rem !important;  /* change height here */
+                            width: 15rem !important;  /* change width here */
+                            object-fit: contain;      /* keeps aspect ratio */
+                        }
+                        .fi-simple-layout {
+                            background-image: url("/images/login-bg.png") !important;
+                            background-size: cover !important;
+                            background-position: center !important;
+                            background-attachment: fixed !important;
+                        }
+                        .fi-simple-main {
+                            background-color: rgba(255, 255, 255, 0.95) !important;
+                            border-radius: 1rem !important;
+                            padding: 2.5rem !important;
+                            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+                            backdrop-filter: blur(10px) !important;
+                        }
+                    </style>
+                '
+            )
 
             // Auto Discover
             ->discoverResources(
@@ -89,9 +87,7 @@ class AdminPanelProvider extends PanelProvider
             ])
 
             // Widgets
-            ->widgets([
-                AccountWidget::class,
-            ])
+            ->widgets([])
 
             // Middleware
             ->middleware([
