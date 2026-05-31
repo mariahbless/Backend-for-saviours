@@ -10,14 +10,12 @@
                 Here's what's happening with Saviours today — {{ now()->format('l, F j, Y') }}
             </p>
         </div>
-        <div style="font-size: 48px;">🏦</div>
-    </div>
+
 
     {{-- ===== STATS CARDS ===== --}}
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 0px;">
 
         <div style="background: white; border-radius: 16px; padding: 24px; display: flex; align-items: center; gap: 16px; border-left: 4px solid #3B82F6; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-            <div style="background: #EFF6FF; padding: 12px; border-radius: 12px; font-size: 24px;">📋</div>
             <div>
                 <p style="font-size: 13px; color: #6B7280; margin: 0;">Total Loans</p>
                 <p style="font-size: 28px; font-weight: 700; color: #3B82F6; margin: 0;">{{ $stats['total_loans'] }}</p>
@@ -25,7 +23,6 @@
         </div>
 
         <div style="background: white; border-radius: 16px; padding: 24px; display: flex; align-items: center; gap: 16px; border-left: 4px solid #22C55E; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-            <div style="background: #F0FDF4; padding: 12px; border-radius: 12px; font-size: 24px;">💰</div>
             <div>
                 <p style="font-size: 13px; color: #6B7280; margin: 0;">Total Disbursed</p>
                 <p style="font-size: 20px; font-weight: 700; color: #22C55E; margin: 0;">UGX {{ number_format($stats['total_disbursed']) }}</p>
@@ -33,7 +30,6 @@
         </div>
 
         <div style="background: white; border-radius: 16px; padding: 24px; display: flex; align-items: center; gap: 16px; border-left: 4px solid #FBBF24; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-            <div style="background: #FFFBEB; padding: 12px; border-radius: 12px; font-size: 24px;">⏳</div>
             <div>
                 <p style="font-size: 13px; color: #6B7280; margin: 0;">Pending Loans</p>
                 <p style="font-size: 28px; font-weight: 700; color: #FBBF24; margin: 0;">{{ $stats['pending'] }}</p>
@@ -41,7 +37,6 @@
         </div>
 
         <div style="background: white; border-radius: 16px; padding: 24px; display: flex; align-items: center; gap: 16px; border-left: 4px solid #EF4444; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-            <div style="background: #FEF2F2; padding: 12px; border-radius: 12px; font-size: 24px;">❌</div>
             <div>
                 <p style="font-size: 13px; color: #6B7280; margin: 0;">Rejected Loans</p>
                 <p style="font-size: 28px; font-weight: 700; color: #EF4444; margin: 0;">{{ $stats['rejected'] }}</p>
@@ -56,7 +51,6 @@
         {{-- PIE CHART --}}
         <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
             <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;">
-                <div style="background: #EEF2FF; padding: 8px; border-radius: 8px; font-size: 18px;">🥧</div>
                 <div>
                     <h2 style="font-size: 16px; font-weight: 700; color: #1F2937; margin: 0;">Loans by Status</h2>
                     <p style="font-size: 13px; color: #9CA3AF; margin: 0;">Distribution of all loan statuses</p>
@@ -86,7 +80,6 @@
         {{-- MONTHLY TABLE --}}
         <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
             <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;">
-                <div style="background: #EFF6FF; padding: 8px; border-radius: 8px; font-size: 18px;">📅</div>
                 <div>
                     <h2 style="font-size: 16px; font-weight: 700; color: #1F2937; margin: 0;">Monthly Loans ({{ now()->year }})</h2>
                     <p style="font-size: 13px; color: #9CA3AF; margin: 0;">Loan activity per month this year</p>
@@ -113,7 +106,6 @@
                 </table>
             @else
                 <div style="display: flex; flex-direction: column; align-items: center; padding: 48px 0; color: #9CA3AF;">
-                    <span style="font-size: 40px; margin-bottom: 12px;">📭</span>
                     <p style="font-size: 13px;">No loan data available for this year.</p>
                 </div>
             @endif
