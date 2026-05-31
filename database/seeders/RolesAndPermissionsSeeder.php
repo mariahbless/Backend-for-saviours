@@ -11,21 +11,21 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run(): void
     {
         // Create Permissions
-        Permission::create(['name' => 'view loans']);
-        Permission::create(['name' => 'create loans']);
-        Permission::create(['name' => 'approve loans']);
-        Permission::create(['name' => 'reject loans']);
-        Permission::create(['name' => 'manage users']);
-        Permission::create(['name' => 'view reports']);
+        Permission::firstOrCreate(['name' => 'view loans']);
+        Permission::firstOrCreate(['name' => 'create loans']);
+        Permission::firstOrCreate(['name' => 'approve loans']);
+        Permission::firstOrCreate(['name' => 'reject loans']);
+        Permission::firstOrCreate(['name' => 'manage users']);
+        Permission::firstOrCreate(['name' => 'view reports']);
 
         // Create Roles
-        $admin = Role::create(['name' => 'admin']);
+        $admin = Role::firstOrCreate(['name' => 'admin']);
         $admin->givePermissionTo(Permission::all());
 
-        $loanOfficer = Role::create(['name' => 'loan officer']);
+        $loanOfficer = Role::firstOrCreate(['name' => 'loan officer']);
         $loanOfficer->givePermissionTo(['view loans', 'approve loans', 'reject loans']);
 
-        $viewer = Role::create(['name' => 'viewer']);
+        $viewer = Role::firstOrCreate(['name' => 'viewer']);
         $viewer->givePermissionTo(['view loans', 'view reports']);
     }
 }
