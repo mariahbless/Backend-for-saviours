@@ -10,6 +10,7 @@
                 Here's what's happening with Saviours today — {{ now()->format('l, F j, Y') }}
             </p>
         </div>
+    </div>
 
 
     {{-- ===== STATS CARDS ===== --}}

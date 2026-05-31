@@ -18,7 +18,7 @@ class AdminUserSeeder extends Seeder
             [
                 'name' => 'Super Admin',
                 'password' => 'password123',
-                'phone' => '+1234567890',
+                'phone' => '+256750000000',
                 'location' => 'HQ',
             ]
         );
