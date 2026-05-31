@@ -31,29 +31,16 @@ jobs:
           npm install
           npm run build
 
-      - name: Sync files to cPanel
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/tests/**
-            .env.example
+      - name: Zip project files
+        run: |
+          zip -r release.zip . -x "*.git*" -x "node_modules/*" -x "tests/*" -x ".env.example" -x "release.zip"
 
-      - name: Fix permissions via FTP
+      - name: Upload release.zip to cPanel
         run: |
           sudo apt-get install -y lftp
           lftp -u "${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" -e "
-            chmod 755 public;
-            chmod 755 storage;
-            chmod 755 bootstrap;
-            chmod 755 bootstrap/cache;
-            chmod 644 public/.htaccess;
-            chmod 644 public/index.php;
+            set ssl:verify-certificate no;
+            put release.zip;
             quit;
           "
 
