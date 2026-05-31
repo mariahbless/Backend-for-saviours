@@ -29,15 +29,16 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
 
-            // 🔥 Branding
-            ->brandName('Saviours Admin')
+            // Branding
+            ->brandName('Saviours')
             ->brandLogo(asset('images/onboard1.png'))
             ->brandLogoHeight('6rem')
 
-            // 🎨 Theme Color
+            // Theme Color
             ->colors([
                 'primary' => Color::hex('#1E40AF'),
             ])
+            ->darkMode(false)
 
 
             ->renderHook(
@@ -45,61 +46,17 @@ class AdminPanelProvider extends PanelProvider
     fn () => '
         <style>
             .fi-logo img {
-                height: 6rem !important;  /* 🔼 change height here */
-                width: 15rem !important;  /* 🔼 change width here */
+                height: 6rem !important;  /* change height here */
+                width: 15rem !important;  /* change width here */
                 object-fit: contain;      /* keeps aspect ratio */
             }
         </style>
     '
 )
 
-         ->renderHook(
-    'panels::head.end',
-    fn () => '
-        <style>
-            /* 🎨 Sidebar background */
-            .fi-sidebar {
-                background-color: #1E40AF !important;
-            }
-            .fi-sidebar-header {
-                background-color: #1E40AF !important;
-            }
 
-            /* ⚪ Group labels like "Loan Management" */
-            .fi-sidebar-group-label {
-                color: #ffffff !important;
-            }
 
-            /* ⚪ Nav item links and text */
-            .fi-sidebar-item-label {
-                color: #ffffff !important;
-            }
-
-            /* ⚪ Nav icons */
-            .fi-sidebar-item-icon {
-                color: #ffffff !important;
-            }
-
-            /* ✅ Active item highlight */
-            .fi-sidebar-item-button.fi-active {
-                background-color: rgba(255,255,255,0.2) !important;
-            }
-
-            /* 🖱️ Hover effect */
-            .fi-sidebar-item-button:hover {
-                background-color: #25f56e !important;
-            }
-        </style>
-    '
-)
-
-            // 💅 Fix brand name visibility
-            ->renderHook(
-    'panels::head.end',
-    fn () => '<style>.fi-brand-name, .fi-logo span { color: white !important; }</style>'
-)
-
-            // 📦 Auto Discover
+            // Auto Discover
             ->discoverResources(
                 in: app_path('Filament/Resources'),
                 for: 'App\\Filament\\Resources'
@@ -113,17 +70,17 @@ class AdminPanelProvider extends PanelProvider
                 for: 'App\\Filament\\Widgets'
             )
 
-            // 📊 Dashboard
+            // Dashboard
             ->pages([
                 Dashboard::class,
             ])
 
-            // 👤 Widgets
+            // Widgets
             ->widgets([
                 AccountWidget::class,
             ])
 
-            // 🔐 Middleware
+            // Middleware
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
