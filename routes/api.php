@@ -234,3 +234,31 @@ Route::get('/system/deploy', function (Request $request) {
             ->header('Content-Type', 'text/plain');
     }
 });
+
+Route::get('/debug-db', function () {
+    try {
+        $dbName = \Illuminate\Support\Facades\DB::connection()->getDatabaseName();
+        $userCount = \App\Models\User::count();
+        $loanCount = \App\Models\Loan::count();
+        $users = \App\Models\User::select('id', 'name', 'email', 'created_at')->latest()->take(5)->get();
+        $loans = \App\Models\Loan::select('id', 'user_id', 'name', 'amount', 'created_at')->latest()->take(5)->get();
+        
+        return response()->json([
+            'success' => true,
+            'default_connection' => config('database.default'),
+            'database_name' => $dbName,
+            'mysql_host' => config('database.connections.mysql.host'),
+            'mysql_database' => config('database.connections.mysql.database'),
+            'user_count' => $userCount,
+            'loan_count' => $loanCount,
+            'recent_users' => $users,
+            'recent_loans' => $loans,
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+        ], 500);
+    }
+});

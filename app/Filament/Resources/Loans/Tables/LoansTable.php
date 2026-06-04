@@ -17,6 +17,10 @@ class LoansTable
                     ->label('User')
                     ->searchable(),
 
+                TextColumn::make('name')
+                    ->label('Applicant Name')
+                    ->searchable(),
+
                 TextColumn::make('amount')
                     ->money('UGX', true)
                     ->sortable(),

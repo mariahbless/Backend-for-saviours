@@ -8,11 +8,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-   'allowed_origins' => [
-        'http://localhost:59913',
-        'http://localhost:59913/', 
-        'http://127.0.0.1:59913',  
-    ],
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
