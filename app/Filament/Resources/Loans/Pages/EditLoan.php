@@ -26,12 +26,12 @@ class EditLoan extends EditRecord
                 ->color('danger')
                 ->icon('heroicon-o-trash')
 
-                // Confirmation Modal
+                
                 ->modalHeading('Delete Loan Record')
                 ->modalDescription('Are you sure you want to delete this loan? This action cannot be undone.')
                 ->modalSubmitActionLabel('Yes, Delete Loan')
 
-                // Custom Delete Notification
+        
                 ->successNotification(
                     Notification::make()
                         ->success()
@@ -43,7 +43,7 @@ class EditLoan extends EditRecord
         ];
     }
 
-    // Custom Save Notification
+
     protected function getSavedNotification(): ?Notification
     {
         return Notification::make()

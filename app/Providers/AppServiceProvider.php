@@ -10,29 +10,27 @@ use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
+                  
     public function register(): void
     {
-        //
+        
     }
 
-    /**
-     * Bootstrap any application services.
-     */
+   
     public function boot(): void
     {
         $this->configureDefaults();
+
+        if (config('app.env') !== 'local') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
 
         \Opcodes\LogViewer\Facades\LogViewer::auth(function ($request) {
             return $request->user() && $request->user()->hasRole('admin');
         });
     }
 
-    /**
-     * Configure default behaviors for production-ready applications.
-     */
+    
     protected function configureDefaults(): void
     {
         Date::use(CarbonImmutable::class);

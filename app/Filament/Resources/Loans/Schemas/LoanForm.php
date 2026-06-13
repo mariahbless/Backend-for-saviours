@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Loans\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use App\Models\User;
@@ -97,12 +98,16 @@ class LoanForm
 
                 Section::make('Identity Documents')
                     ->schema([
-                        TextInput::make('id_image_front')
-                            ->label('ID Image Front (Path)')
-                            ->disabled(),
-                        TextInput::make('id_image_back')
-                            ->label('ID Image Back (Path)')
-                            ->disabled(),
+                        FileUpload::make('id_image_front')
+                            ->label('ID Image Front')
+                            ->image()
+                            ->directory('id_images')
+                            ->disk('public'),
+                        FileUpload::make('id_image_back')
+                            ->label('ID Image Back')
+                            ->image()
+                            ->directory('id_images')
+                            ->disk('public'),
                     ]),
             ]);
     }

@@ -18,7 +18,6 @@ class ManageRoles extends Page
     protected static ?string $title = 'Manage User Roles';
     protected string $view = 'filament.pages.manage-roles';
 
-    // Only admin can see this page
     public static function canAccess(): bool
     {
         return auth()->check() && auth()->user()->hasRole('admin');
@@ -28,7 +27,7 @@ class ManageRoles extends Page
 
     public function mount(): void
     {
-        // Load current roles for all users
+        
         foreach (User::with('roles')->get() as $user) {
             $this->selectedRoles[$user->id] = $user->roles->first()?->name ?? '';
         }
