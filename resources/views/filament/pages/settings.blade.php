@@ -40,7 +40,7 @@
 
                 <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; background: #F9FAFB; border-radius: 12px;">
                     <div>
-                        <p style="font-size: 14px; font-weight: 600; color: #374151; margin: 0;">📋 New Loan Applications</p>
+                        <p style="font-size: 14px; font-weight: 600; color: #374151; margin: 0;">New Loan Applications</p>
                         <p style="font-size: 12px; color: #9CA3AF; margin: 4px 0 0;">Get notified when a new loan is submitted</p>
                     </div>
                     <label style="position: relative; display: inline-block; width: 52px; height: 28px;">
@@ -53,7 +53,7 @@
 
                 <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; background: #F9FAFB; border-radius: 12px;">
                     <div>
-                        <p style="font-size: 14px; font-weight: 600; color: #374151; margin: 0;">✅ Loan Approvals</p>
+                        <p style="font-size: 14px; font-weight: 600; color: #374151; margin: 0;"> Loan Approvals</p>
                         <p style="font-size: 12px; color: #9CA3AF; margin: 4px 0 0;">Get notified when a loan is approved</p>
                     </div>
                     <label style="position: relative; display: inline-block; width: 52px; height: 28px;">
@@ -66,7 +66,7 @@
 
                 <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; background: #F9FAFB; border-radius: 12px;">
                     <div>
-                        <p style="font-size: 14px; font-weight: 600; color: #374151; margin: 0;">❌ Loan Rejections</p>
+                        <p style="font-size: 14px; font-weight: 600; color: #374151; margin: 0;"> Loan Rejections</p>
                         <p style="font-size: 12px; color: #9CA3AF; margin: 4px 0 0;">Get notified when a loan is rejected</p>
                     </div>
                     <label style="position: relative; display: inline-block; width: 52px; height: 28px;">
@@ -79,7 +79,7 @@
 
                 <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; background: #F9FAFB; border-radius: 12px;">
                     <div>
-                        <p style="font-size: 14px; font-weight: 600; color: #374151; margin: 0;">👤 New User Registrations</p>
+                        <p style="font-size: 14px; font-weight: 600; color: #374151; margin: 0;">New User Registrations</p>
                         <p style="font-size: 12px; color: #9CA3AF; margin: 4px 0 0;">Get notified when a new user registers</p>
                     </div>
                     <label style="position: relative; display: inline-block; width: 52px; height: 28px;">
@@ -113,21 +113,21 @@
                 </thead>
                 <tbody>
                     <tr style="border-top: 1px solid #F3F4F6; background: #FAFAFA;">
-                        <td style="padding: 14px 16px; font-weight: 600; color: #1F2937;">🛡️ Admin</td>
+                        <td style="padding: 14px 16px; font-weight: 600; color: #1F2937;"> Admin</td>
                         <td style="padding: 14px 16px;">
                             <span style="background: #DBEAFE; color: #2563EB; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;">High Access</span>
                         </td>
                         <td style="padding: 14px 16px; color: #6B7280;">Can manage everything in loans and users</td>
                     </tr>
                     <tr style="border-top: 1px solid #F3F4F6;">
-                        <td style="padding: 14px 16px; font-weight: 600; color: #1F2937;">📋 Loan Officer</td>
+                        <td style="padding: 14px 16px; font-weight: 600; color: #1F2937;"> Loan Officer</td>
                         <td style="padding: 14px 16px;">
                             <span style="background: #DCFCE7; color: #16A34A; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;">Medium Access</span>
                         </td>
                         <td style="padding: 14px 16px; color: #6B7280;">Can view and approve loans only</td>
                     </tr>
                     <tr style="border-top: 1px solid #F3F4F6; background: #FAFAFA;">
-                        <td style="padding: 14px 16px; font-weight: 600; color: #1F2937;">👁️ Viewer</td>
+                        <td style="padding: 14px 16px; font-weight: 600; color: #1F2937;"> Viewer</td>
                         <td style="padding: 14px 16px;">
                             <span style="background: #F3F4F6; color: #4B5563; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;">Read Only</span>
                         </td>

@@ -42,7 +42,38 @@ class Loan extends Model
         'monthly_income' => 'float',
     ];
 
+    protected static function booted()
+    {
+        static::created(function ($loan) {
+            \App\Services\ActivityLogger::log(
+                'Created Loan',
+                "Loan #{$loan->id} of UGX ".number_format($loan->amount)." created for applicant {$loan->name}."
+            );
+        });
+
+        static::updated(function ($loan) {
+            if ($loan->isDirty('status')) {
+                $status = ucfirst($loan->status);
+                \App\Services\ActivityLogger::log(
+                    "{$status} Loan",
+                    "Loan #{$loan->id} for applicant {$loan->name} was {$loan->status}."
+                );
+            } else {
+                \App\Services\ActivityLogger::log(
+                    'Updated Loan',
+                    "Loan #{$loan->id} details updated for applicant {$loan->name}."
+                );
+            }
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class);
-    }}
+    }
+
+    public function guarantors()
+    {
+        return $this->hasMany(\App\Models\Guarantor::class);
+    }
+}

@@ -2,12 +2,12 @@
 
 namespace App\Filament\Resources\Loans\Schemas;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
+use App\Models\User;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use App\Models\User;
 
 class LoanForm
 {
@@ -33,9 +33,9 @@ class LoanForm
                             ->label('Loan Type')
                             ->options([
                                 'School Fees Loan' => 'School Fees Loan',
-                                'Business Loan'    => 'Business Loan',
-                                'Personal Loan'    => 'Personal Loan',
-                                'Land Title Loan'  => 'Land Title Loan',
+                                'Business Loan' => 'Business Loan',
+                                'Personal Loan' => 'Personal Loan',
+                                'Land Title Loan' => 'Land Title Loan',
                             ])
                             ->required(),
 
@@ -51,7 +51,7 @@ class LoanForm
                         Select::make('status')
                             ->label('Status')
                             ->options([
-                                'pending'  => 'Pending',
+                                'pending' => 'Pending',
                                 'approved' => 'Approved',
                                 'rejected' => 'Rejected',
                             ])

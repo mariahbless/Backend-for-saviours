@@ -2,34 +2,38 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Pages\Page;
 use App\Models\Loan;
-use Illuminate\Support\Facades\Auth;
 use BackedEnum;
+use Filament\Pages\Page;
 
 class Dashboard extends Page
 {
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-home';
+
     protected static ?string $title = 'Admin Dashboard';
+
     protected static ?int $navigationSort = -1;
+
     protected string $view = 'filament.pages.dashboard';
 
     public array $stats = [];
+
     public array $monthlyData = [];
+
     public array $statusData = [];
 
     public function mount(): void
     {
         $this->stats = [
-            'total_loans'     => Loan::count(),
+            'total_loans' => Loan::count(),
             'total_disbursed' => Loan::where('status', 'approved')->sum('amount'),
-            'pending'         => Loan::where('status', 'pending')->count(),
-            'approved'        => Loan::where('status', 'approved')->count(),
-            'rejected'        => Loan::where('status', 'rejected')->count(),
+            'pending' => Loan::where('status', 'pending')->count(),
+            'approved' => Loan::where('status', 'approved')->count(),
+            'rejected' => Loan::where('status', 'rejected')->count(),
         ];
 
         $this->statusData = [
-            'pending'  => Loan::where('status', 'pending')->count(),
+            'pending' => Loan::where('status', 'pending')->count(),
             'approved' => Loan::where('status', 'approved')->count(),
             'rejected' => Loan::where('status', 'rejected')->count(),
         ];
@@ -39,9 +43,9 @@ class Dashboard extends Page
             ->groupBy('month')
             ->orderBy('month')
             ->get()
-            ->map(fn($row) => [
-                'month'  => date('M', mktime(0, 0, 0, $row->month, 1)),
-                'total'  => $row->total,
+            ->map(fn ($row) => [
+                'month' => date('M', mktime(0, 0, 0, $row->month, 1)),
+                'total' => $row->total,
                 'amount' => $row->amount,
             ])
             ->toArray();

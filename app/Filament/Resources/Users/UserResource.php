@@ -26,9 +26,9 @@ class UserResource extends Resource
 
     // Only admin can see Users in the sidebar
     public static function canViewAny(): bool
-{
-    return auth()->check() && auth()->user()->hasRole('admin');
-}
+    {
+        return auth()->check() && auth()->user()->hasRole('admin');
+    }
 
     // Only admin can view a single user
     public static function canView($record): bool

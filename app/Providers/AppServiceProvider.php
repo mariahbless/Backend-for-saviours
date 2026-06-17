@@ -10,13 +10,8 @@ use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
-                  
-    public function register(): void
-    {
-        
-    }
+    public function register(): void {}
 
-   
     public function boot(): void
     {
         $this->configureDefaults();
@@ -28,9 +23,15 @@ class AppServiceProvider extends ServiceProvider
         \Opcodes\LogViewer\Facades\LogViewer::auth(function ($request) {
             return $request->user() && $request->user()->hasRole('admin');
         });
+
+        \Illuminate\Support\Facades\Event::listen(
+            \Illuminate\Auth\Events\Login::class,
+            function ($event) {
+                \App\Services\ActivityLogger::log('Login', $event->user->name.' logged in.');
+            }
+        );
     }
 
-    
     protected function configureDefaults(): void
     {
         Date::use(CarbonImmutable::class);

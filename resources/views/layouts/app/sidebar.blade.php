@@ -16,6 +16,20 @@
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
+
+                <flux:sidebar.group :heading="__('Administration')" class="grid">
+                    <flux:sidebar.item icon="users" :href="route('dashboard.guarantors')" :current="request()->routeIs('dashboard.guarantors')" wire:navigate>
+                        {{ __('Guarantors') }}
+                    </flux:sidebar.item>
+                    @if(auth()->user()->hasRole('admin'))
+                        <flux:sidebar.item icon="shield" :href="route('dashboard.roles-permissions')" :current="request()->routeIs('dashboard.roles-permissions')" wire:navigate>
+                            {{ __('Roles & Permissions') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="clock" :href="route('dashboard.activity-logs')" :current="request()->routeIs('dashboard.activity-logs')" wire:navigate>
+                            {{ __('Activity Logs') }}
+                        </flux:sidebar.item>
+                    @endif
+                </flux:sidebar.group>
             </flux:sidebar.nav>
 
             <flux:spacer />

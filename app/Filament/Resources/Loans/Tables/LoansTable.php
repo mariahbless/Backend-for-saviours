@@ -2,17 +2,17 @@
 
 namespace App\Filament\Resources\Loans\Tables;
 
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class LoansTable
 {
     public static function configure(Table $table): Table
     {
         return $table
-            ->defaultSort('created_at', 'desc') 
-               ->columns([
+            ->defaultSort('created_at', 'desc')
+            ->columns([
                 TextColumn::make('user.name')
                     ->label('User')
                     ->searchable(),
@@ -31,7 +31,7 @@ class LoansTable
 
                 TextColumn::make('collateral')
                     ->label('Collateral')
-                     ->searchable(),
+                    ->searchable(),
 
                 BadgeColumn::make('status')
                     ->colors([

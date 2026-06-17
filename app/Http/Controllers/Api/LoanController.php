@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Loan;
 use App\Models\Repayment;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class LoanController extends Controller
@@ -21,7 +21,7 @@ class LoanController extends Controller
 
         return response()->json([
             'success' => true,
-            'loans'   => $loans
+            'loans' => $loans,
         ]);
     }
 
@@ -29,40 +29,40 @@ class LoanController extends Controller
     public function store(Request $request)
     {
         $request->merge([
-            'description' => ucwords(strtolower($request->description))
+            'description' => ucwords(strtolower($request->description)),
         ]);
 
         $request->validate([
-            'user_id'             => 'required|exists:users,id',
-            'name'                => 'required|string|max:255',
-            'email'               => 'required|email|max:255',
-            'contact'             => 'required|string|max:20',
-            'other_contact'       => 'nullable|string|max:20',
-            'gender'              => 'required|in:Male,Female,Other',
-            'location'            => 'required|string|max:255',
-            'current_address'     => 'required|string',
-            'occupation'          => 'required|string|max:255',
-            'monthly_income'      => 'required|numeric|min:0',
+            'user_id' => 'required|exists:users,id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'contact' => 'required|string|max:20',
+            'other_contact' => 'nullable|string|max:20',
+            'gender' => 'required|in:Male,Female,Other',
+            'location' => 'required|string|max:255',
+            'current_address' => 'required|string',
+            'occupation' => 'required|string|max:255',
+            'monthly_income' => 'required|numeric|min:0',
 
-            'next_of_kin_name'    => 'required|string|max:255',
+            'next_of_kin_name' => 'required|string|max:255',
             'next_of_kin_contact' => 'required|string|max:20',
 
-            'amount'              => 'required|numeric|min:1',
-            'description'         => 'required|in:School Fees Loan,Business Loan,Personal Loan,Land Title Loan',
+            'amount' => 'required|numeric|min:1',
+            'description' => 'required|in:School Fees Loan,Business Loan,Personal Loan,Land Title Loan',
 
             // ✅ Updated collateral
-            'collateral'          => 'required|in:Land,Vehicle Logbook,Business Assets',
+            'collateral' => 'required|in:Land,Vehicle Logbook,Business Assets',
 
-            'status'              => 'nullable|string|in:pending,approved,rejected',
+            'status' => 'nullable|string|in:pending,approved,rejected',
 
             // ✅ New images
-            'id_image_front'      => 'required|string',
-            'id_image_back'       => 'required|string',
+            'id_image_front' => 'required|string',
+            'id_image_back' => 'required|string',
         ]);
 
         try {
             $frontImage = $this->saveBase64Image($request->id_image_front, 'front');
-            $backImage  = $this->saveBase64Image($request->id_image_back, 'back');
+            $backImage = $this->saveBase64Image($request->id_image_back, 'back');
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -71,32 +71,32 @@ class LoanController extends Controller
         }
 
         $loan = Loan::create([
-            'user_id'             => $request->user_id,
-            'name'                => $request->name,
-            'email'               => $request->email,
-            'contact'             => $request->contact,
-            'other_contact'       => $request->other_contact,
-            'gender'              => $request->gender,
-            'location'            => $request->location,
-            'current_address'     => $request->current_address,
-            'occupation'          => $request->occupation,
-            'monthly_income'      => $request->monthly_income,
-            'next_of_kin_name'    => $request->next_of_kin_name,
+            'user_id' => $request->user_id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'contact' => $request->contact,
+            'other_contact' => $request->other_contact,
+            'gender' => $request->gender,
+            'location' => $request->location,
+            'current_address' => $request->current_address,
+            'occupation' => $request->occupation,
+            'monthly_income' => $request->monthly_income,
+            'next_of_kin_name' => $request->next_of_kin_name,
             'next_of_kin_contact' => $request->next_of_kin_contact,
-            'amount'              => $request->amount,
-            'description'         => $request->description,
-            'collateral'          => $request->collateral,
-            'status'              => $request->status ?? 'pending',
+            'amount' => $request->amount,
+            'description' => $request->description,
+            'collateral' => $request->collateral,
+            'status' => $request->status ?? 'pending',
 
             // ✅ Save both images
-            'id_image_front'      => $frontImage,
-            'id_image_back'       => $backImage,
+            'id_image_front' => $frontImage,
+            'id_image_back' => $backImage,
         ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Loan application submitted successfully',
-            'loan'    => $loan
+            'loan' => $loan,
         ], 201);
     }
 
@@ -108,16 +108,16 @@ class LoanController extends Controller
             ->where('user_id', Auth::id())
             ->first();
 
-        if (!$loan) {
+        if (! $loan) {
             return response()->json([
                 'success' => false,
-                'message' => 'Loan not found'
+                'message' => 'Loan not found',
             ], 404);
         }
 
         return response()->json([
             'success' => true,
-            'loan'    => $loan
+            'loan' => $loan,
         ]);
     }
 
@@ -128,10 +128,10 @@ class LoanController extends Controller
             ->where('user_id', Auth::id())
             ->first();
 
-        if (!$loan) {
+        if (! $loan) {
             return response()->json([
                 'success' => false,
-                'message' => 'Loan not found'
+                'message' => 'Loan not found',
             ], 404);
         }
 
@@ -144,26 +144,26 @@ class LoanController extends Controller
 
         if ($request->has('description')) {
             $request->merge([
-                'description' => ucwords(strtolower($request->description))
+                'description' => ucwords(strtolower($request->description)),
             ]);
         }
 
         $request->validate([
-            'amount'      => 'sometimes|numeric|min:1',
+            'amount' => 'sometimes|numeric|min:1',
             'description' => 'sometimes|in:School Fees Loan,Business Loan,Personal Loan,Land Title Loan',
-            'collateral'  => 'sometimes|in:Land,Vehicle Logbook,Business Assets',
+            'collateral' => 'sometimes|in:Land,Vehicle Logbook,Business Assets',
         ]);
 
         $loan->update([
-            'amount'      => $request->amount      ?? $loan->amount,
+            'amount' => $request->amount ?? $loan->amount,
             'description' => $request->description ?? $loan->description,
-            'collateral'  => $request->collateral  ?? $loan->collateral,
+            'collateral' => $request->collateral ?? $loan->collateral,
         ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Loan updated successfully',
-            'loan'    => $loan->fresh()
+            'loan' => $loan->fresh(),
         ]);
     }
 
@@ -172,10 +172,10 @@ class LoanController extends Controller
     {
         $loan = Loan::find($id);
 
-        if (!$loan) {
+        if (! $loan) {
             return response()->json([
                 'success' => false,
-                'message' => 'Loan not found'
+                'message' => 'Loan not found',
             ], 404);
         }
 
@@ -192,7 +192,7 @@ class LoanController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Loan deleted successfully'
+            'message' => 'Loan deleted successfully',
         ]);
     }
 
@@ -203,14 +203,14 @@ class LoanController extends Controller
             ->where('user_id', Auth::id())
             ->first();
 
-        if (!$loan) {
+        if (! $loan) {
             return response()->json([
                 'success' => false,
-                'message' => 'Loan not found'
+                'message' => 'Loan not found',
             ], 404);
         }
 
-        if (!in_array($loan->status, ['approved', 'disbursed'])) {
+        if (! in_array($loan->status, ['approved', 'disbursed'])) {
             return response()->json([
                 'success' => false,
                 'message' => 'Loan must be approved or disbursed.',
@@ -218,14 +218,14 @@ class LoanController extends Controller
         }
 
         $request->validate([
-            'amount'         => 'required|numeric|min:1',
+            'amount' => 'required|numeric|min:1',
             'payment_method' => 'required|in:Mobile Money,Bank Transfer,Cash,Cheque',
         ]);
 
         $repayment = Repayment::create([
-            'loan_id'        => $loan->id,
-            'user_id'        => Auth::id(),
-            'amount'         => $request->amount,
+            'loan_id' => $loan->id,
+            'user_id' => Auth::id(),
+            'amount' => $request->amount,
             'payment_method' => $request->payment_method,
         ]);
 
@@ -236,10 +236,10 @@ class LoanController extends Controller
         }
 
         return response()->json([
-            'success'   => true,
-            'message'   => 'Repayment recorded successfully',
+            'success' => true,
+            'message' => 'Repayment recorded successfully',
             'repayment' => $repayment,
-            'loan'      => $loan->fresh(),
+            'loan' => $loan->fresh(),
         ], 201);
     }
 
@@ -250,10 +250,10 @@ class LoanController extends Controller
             ->where('user_id', Auth::id())
             ->first();
 
-        if (!$loan) {
+        if (! $loan) {
             return response()->json([
                 'success' => false,
-                'message' => 'Loan not found'
+                'message' => 'Loan not found',
             ], 404);
         }
 
@@ -262,8 +262,8 @@ class LoanController extends Controller
             ->get();
 
         return response()->json([
-            'success'    => true,
-            'repayments' => $repayments
+            'success' => true,
+            'repayments' => $repayments,
         ]);
     }
 
@@ -276,16 +276,13 @@ class LoanController extends Controller
 
         $imageData = base64_decode($base64Image);
 
-        $fileName = 'id_images/' . Str::uuid() . '_' . $type . '.jpg';
+        $fileName = 'id_images/'.Str::uuid().'_'.$type.'.jpg';
 
         Storage::disk('public')->put($fileName, $imageData);
 
         return $fileName;
     }
 }
-
-
-
 
 // namespace App\Http\Controllers\Api;
 
@@ -388,7 +385,6 @@ class LoanController extends Controller
 //         'loan'    => $loan
 //     ], 201);
 // }
-
 
 //     public function show($id)
 //     {
@@ -554,4 +550,3 @@ class LoanController extends Controller
 //         ]);
 //     }
 // }
-

@@ -12,6 +12,10 @@ class Logout
      */
     public function __invoke()
     {
+        if (Auth::check()) {
+            \App\Services\ActivityLogger::log('Logout', Auth::user()->name.' logged out.');
+        }
+
         Auth::guard('web')->logout();
 
         Session::invalidate();

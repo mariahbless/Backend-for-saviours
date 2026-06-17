@@ -12,7 +12,7 @@ class EditLoan extends EditRecord
 {
     protected static string $resource = LoanResource::class;
 
-    public function getMaxContentWidth(): Width | string | null
+    public function getMaxContentWidth(): Width|string|null
     {
         return Width::Full;
     }
@@ -26,12 +26,10 @@ class EditLoan extends EditRecord
                 ->color('danger')
                 ->icon('heroicon-o-trash')
 
-                
                 ->modalHeading('Delete Loan Record')
                 ->modalDescription('Are you sure you want to delete this loan? This action cannot be undone.')
                 ->modalSubmitActionLabel('Yes, Delete Loan')
 
-        
                 ->successNotification(
                     Notification::make()
                         ->success()
@@ -42,7 +40,6 @@ class EditLoan extends EditRecord
                 ),
         ];
     }
-
 
     protected function getSavedNotification(): ?Notification
     {

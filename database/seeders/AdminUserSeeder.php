@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Seeder;
 
 class AdminUserSeeder extends Seeder
 {
@@ -22,7 +21,7 @@ class AdminUserSeeder extends Seeder
                 'location' => 'HQ',
             ]
         );
-        
+
         // Assign admin role if roles exist
         if (class_exists(\Spatie\Permission\Models\Role::class)) {
             $user->assignRole('admin');

@@ -2,20 +2,25 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Pages\Page;
-use Filament\Notifications\Notification;
 use App\Models\User;
-use Spatie\Permission\Models\Role;
 use BackedEnum;
+use Filament\Notifications\Notification;
+use Filament\Pages\Page;
+use Spatie\Permission\Models\Role;
 use UnitEnum;
 
 class ManageRoles extends Page
 {
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-shield-check';
+
     protected static ?string $navigationLabel = 'Manage Roles';
+
     protected static UnitEnum|string|null $navigationGroup = 'Settings';
+
     protected static ?int $navigationSort = 1;
+
     protected static ?string $title = 'Manage User Roles';
+
     protected string $view = 'filament.pages.manage-roles';
 
     public static function canAccess(): bool
@@ -27,7 +32,7 @@ class ManageRoles extends Page
 
     public function mount(): void
     {
-        
+
         foreach (User::with('roles')->get() as $user) {
             $this->selectedRoles[$user->id] = $user->roles->first()?->name ?? '';
         }
@@ -40,6 +45,11 @@ class ManageRoles extends Page
 
         if ($role) {
             $user->syncRoles([$role]);
+
+            \App\Services\ActivityLogger::log(
+                'Updated Role',
+                "Assigned role '{$role}' to user {$user->name}."
+            );
 
             Notification::make()
                 ->title('Role Updated')

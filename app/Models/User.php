@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
+// use Spatie\LaravelPermission\Traits\HasRoles;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
-//use Spatie\LaravelPermission\Traits\HasRoles;
 use Spatie\Permission\Traits\HasRoles;
-
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -20,9 +18,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasRole('admin') || $this->hasRole('loan officer') || $this->hasRole('viewer');
     }
-    
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles;
+    use HasApiTokens, HasFactory, HasRoles, Notifiable, TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -74,8 +72,9 @@ class User extends Authenticatable implements FilamentUser
     {
         $words = explode(' ', $this->name);
         if (count($words) >= 2) {
-            return strtoupper(substr($words[0], 0, 1) . substr($words[count($words) - 1], 0, 1));
+            return strtoupper(substr($words[0], 0, 1).substr($words[count($words) - 1], 0, 1));
         }
+
         return strtoupper(substr($this->name, 0, 2));
     }
 }
